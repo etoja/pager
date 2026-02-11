@@ -75,7 +75,17 @@ def pager_post(payload: dict) -> None:
         "Content-Type": "application/json",
         "x-channel-key": PAGER_KEY,
     }
+
+    # DEBUG: чтобы понять, доходит ли запрос до Pager и что он отвечает
+    print("=== Sending to Pager ===")
+    print(payload)
+
     r = requests.post(PAGER_URL, json=payload, headers=headers, timeout=15)
+
+    print("=== Pager response ===")
+    print("status:", r.status_code)
+    print("body:", r.text[:1000])
+
     if r.status_code >= 400:
         print("Pager inbound error:", r.status_code, r.text[:800])
 
